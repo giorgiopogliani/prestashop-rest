@@ -15,6 +15,7 @@ use PrestaShop\PrestaShop\Adapter\Product\PriceFormatter;
 
 class BinshopsrestAddressModuleFrontController extends AbstractAuthRESTController
 {
+    public $guestAllowed = true;
 
     protected function processGetRequest()
     {
