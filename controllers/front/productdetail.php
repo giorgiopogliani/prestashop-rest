@@ -98,6 +98,7 @@ class BinshopsrestProductdetailModuleFrontController extends AbstractRESTControl
         $product['meta_title'] = $this->product->meta_title;
         $product['meta_description'] = $this->product->meta_description;
         $product['meta_keywords'] = $this->product->meta_keywords;
+        $product['alternative_urls'] = $this->getAlternativeLangsUrl();
         $product['show_price'] = $this->product->show_price;
         $product['new_products'] = (isset($this->product->new) && $this->product->new == 1) ? "1" : "0";
         $product['on_sale_products'] = $this->product->on_sale;
@@ -969,5 +970,26 @@ class BinshopsrestProductdetailModuleFrontController extends AbstractRESTControl
         }
 
         return $breadcrumb['links'];
+    }
+
+    /**
+     * @return array containing the URLs of the same page but for different languages
+     */
+    protected function getAlternativeLangsUrl()
+    {
+        $alternativeLangs = [];
+        $rewrites = $this->product->getUrlRewriteInformations($this->product->id);
+
+        foreach ($rewrites as $lang) {
+            $language = new Language($lang['id_lang']);
+            $langUrl = $this->context->link->getProductLink($this->product, $lang['link_rewrite'], $lang['category_rewrite'], null, $lang['id_lang']);
+            $query = http_build_query(array_filter([
+                'id_currency' => Currency::getIdByIsoCode($_GET['iso_currency']),
+                'id_country' => $_GET['id_country']
+            ]));
+            $alternativeLangs[$language->language_code] = http_build_url($langUrl, ['query' => $query ], HTTP_URL_JOIN_QUERY);
+        }
+
+        return $alternativeLangs;
     }
 }
