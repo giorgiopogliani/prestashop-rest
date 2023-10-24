@@ -985,7 +985,7 @@ class BinshopsrestProductdetailModuleFrontController extends AbstractRESTControl
             $langUrl = $this->context->link->getProductLink($this->product, $lang['link_rewrite'], $lang['category_rewrite'], null, $lang['id_lang']);
             $query = http_build_query(array_filter([
                 'id_currency' => Currency::getIdByIsoCode($_GET['iso_currency']),
-                'id_country' => $_GET['id_country']
+                'id_country' => $_GET['id_country'] ?? null
             ]));
             $alternativeLangs[$language->language_code] = http_build_url($langUrl, ['query' => $query ], HTTP_URL_JOIN_QUERY);
         }

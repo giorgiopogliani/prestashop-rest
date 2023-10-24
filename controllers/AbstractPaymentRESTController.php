@@ -36,6 +36,11 @@ abstract class AbstractPaymentRESTController extends ModuleFrontController
         }
 
         parent::init();
+
+        if (Tools::getValue('id_country')) {
+            $this->context->country = new Country(Tools::getValue('id_country'));
+        }
+
         switch ($_SERVER['REQUEST_METHOD']) {
             case 'GET':
                 $this->processGetRequest();

@@ -30,6 +30,10 @@ abstract class AbstractRESTController extends ModuleFrontController
 
         parent::init();
 
+        if (Tools::getValue('id_country')) {
+            $this->context->country = new Country(Tools::getValue('id_country'));
+        }
+
         $response = [
             'success' => true,
             'code' => 210,

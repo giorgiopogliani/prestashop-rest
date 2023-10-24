@@ -16,6 +16,10 @@ abstract class AbstractCartRESTController extends CartControllerCore {
 
         parent::init();
 
+        if (Tools::getValue('id_country')) {
+            $this->context->country = new Country(Tools::getValue('id_country'));
+        }
+
         $response = [
             'success' => true,
             'code' => 210,

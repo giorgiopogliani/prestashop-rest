@@ -37,6 +37,10 @@ abstract class AbstractProductListingRESTController extends ProductListingFrontC
 
         parent::init();
 
+        if (Tools::getValue('id_country')) {
+            $this->context->country = new Country(Tools::getValue('id_country'));
+        }
+
         $response = [
             'success' => true,
             'code' => 210,
